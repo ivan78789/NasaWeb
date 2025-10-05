@@ -11,6 +11,13 @@ require_once __DIR__ . '/router.php';
 // Главная
 get('/', 'views/index.php');
 
+// Новые страницы
+get('/news', 'views/news.php');
+get('/map', 'views/map.php');
+get('/weather', 'views/weather.php');
+get('/about', 'views/about.php');
+get('/visualization', 'views/visualization.php');
+
 // Профиль пользователя
 get('/profile', 'views/profile.php');
 
@@ -45,6 +52,7 @@ get('/sign-up', 'auth/sign-up.php');
 
 // Новости
 get('/api/news', 'api/news/news.php');
+get('/api/news/newsapi', 'api/news/newsapi.php');
 
 // Погода
 get('/api/weather', 'api/weather/weather.php');
@@ -52,6 +60,9 @@ post('/api/weather/get', 'api/weather/weather.php');
 
 // Оповещения о ЧС
 get('/api/alerts', 'api/alerts/alerts.php');
+
+// NASA EONET события
+get('/api/eonet/events', 'api/eonet/events.php');
 
 // Подписка на уведомления
 get('/api/subscribe', 'api/subscribe/subscribe.php');
@@ -74,6 +85,9 @@ get('/api/notifications', 'api/notifications/index.php');
 // Переводчик
 get('/api/translate', 'api/translate/index.php');
 post('/api/translate/text', 'api/translate/translate.php');
+
+// Контактная форма
+post('/api/contact', 'api/contact/contact.php');
 
 
 /*

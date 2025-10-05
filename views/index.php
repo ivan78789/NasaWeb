@@ -9,6 +9,43 @@ $TitleName = "Disaster Alert / TerraAlert - Главная страница";
 <?php require_once __DIR__ . '/../layout/nav.php' ?>
 
 <div class="container-fluid">
+    <!-- Hero секция -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="hero-section">
+                <div class="hero-content">
+                    <h1 class="display-3 fw-bold text-white mb-4">
+                        <i class="bi bi-shield-check me-3"></i>
+                        <span class="translatable">Disaster Alert</span>
+                    </h1>
+                    <p class="lead text-white-50 mb-4">
+                        <span class="translatable">Мониторинг природных катастроф в реальном времени</span>
+                    </p>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <h3 class="text-white mb-0" id="total-events">0</h3>
+                            <small class="text-white-50">
+                                <span class="translatable">Активных событий</span>
+                            </small>
+                        </div>
+                        <div class="stat-item">
+                            <h3 class="text-white mb-0" id="safety-score">100%</h3>
+                            <small class="text-white-50">
+                                <span class="translatable">Индекс безопасности</span>
+                            </small>
+                        </div>
+                        <div class="stat-item">
+                            <h3 class="text-white mb-0" id="subscribers">0</h3>
+                            <small class="text-white-50">
+                                <span class="translatable">Подписчиков</span>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Статус безопасности -->
     <div class="row mb-4">
         <div class="col-12">
@@ -173,6 +210,7 @@ $data = json_decode($response, true);
 ?>
 
 <?php if ($data): ?>
+<div class="nasa-cards" style="display: flex; flex-direction: row; gap: 20px;">
 <div class="nasa-card">
     <div class="nasa-card-header">
         <h2 class="nasa-title"><?= htmlspecialchars($data['title']) ?></h2>
@@ -187,8 +225,219 @@ $data = json_decode($response, true);
         <p><?= nl2br(htmlspecialchars($data['explanation'])) ?></p>
     </div>
 </div>
+<div class="nasa-card">
+    <div class="nasa-card-header">
+        <h2 class="nasa-title"><?= htmlspecialchars($data['title']) ?></h2>
+        <p class="nasa-date"><?= htmlspecialchars($data['date']) ?></p>
+    </div>
+    <?php if (!empty($data['url'])): ?>
+        <div class="nasa-image">
+            <img src="<?= htmlspecialchars($data['url']) ?>" alt="<?= htmlspecialchars($data['title']) ?>" />
+        </div>
+    <?php endif; ?>
+    <div class="nasa-explanation">
+        <p><?= nl2br(htmlspecialchars($data['explanation'])) ?></p>
+    </div>
+</div>
+<div class="nasa-card">
+    <div class="nasa-card-header">
+        <h2 class="nasa-title"><?= htmlspecialchars($data['title']) ?></h2>
+        <p class="nasa-date"><?= htmlspecialchars($data['date']) ?></p>
+    </div>
+    <?php if (!empty($data['url'])): ?>
+        <div class="nasa-image">
+            <img src="<?= htmlspecialchars($data['url']) ?>" alt="<?= htmlspecialchars($data['title']) ?>" />
+        </div>
+    <?php endif; ?>
+    <div class="nasa-explanation">
+        <p><?= nl2br(htmlspecialchars($data['explanation'])) ?></p>
+    </div>
+</div>
+</div>
 
 <style>
+.hero-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 4rem 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-item h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.weather-widget {
+    background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+    color: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.weather-widget h5 {
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.weather-current {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.weather-icon {
+    font-size: 3rem;
+    opacity: 0.9;
+}
+
+.weather-temp {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin: 0;
+}
+
+.weather-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.subscription-widget {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    border: 1px solid #e9ecef;
+}
+
+.map-widget {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    border: 1px solid #e9ecef;
+}
+
+.map-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: between;
+    align-items: center;
+}
+
+.map-filters {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.map-filter-btn {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.map-filter-btn:hover,
+.map-filter-btn.active {
+    background: rgba(255,255,255,0.3);
+    transform: translateY(-1px);
+}
+
+.news-widget {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    border: 1px solid #e9ecef;
+}
+
+.news-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #f8f9fa;
+    transition: all 0.3s ease;
+}
+
+.news-item:last-child {
+    border-bottom: none;
+}
+
+.news-item:hover {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 0 -1rem;
+}
+
+.news-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    object-fit: cover;
+    background: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+}
+
+.news-content h6 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+.news-meta {
+    font-size: 0.8rem;
+    color: #6c757d;
+    display: flex;
+    gap: 1rem;
+}
+
 .nasa-card {
     max-width: 800px;
     margin: 30px auto;
@@ -630,7 +879,270 @@ document.getElementById('subscription-form').addEventListener('submit', function
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
     initMap();
+    loadHeroStats();
+    loadWeatherWidget();
+    loadNewsWidget();
+    setupPushNotifications();
 });
+
+// Загрузка статистики для hero секции
+async function loadHeroStats() {
+    try {
+        // Загружаем данные о событиях
+        const eventsResponse = await fetch('/api/alerts?since=' + new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString());
+        const eventsData = await eventsResponse.json();
+        
+        const eventsCount = eventsData.features ? eventsData.features.length : 0;
+        document.getElementById('total-events').textContent = eventsCount;
+        
+        // Расчет индекса безопасности
+        const safetyScore = Math.max(0, 100 - (eventsCount * 2));
+        document.getElementById('safety-score').textContent = safetyScore + '%';
+        
+        // Обновляем статус безопасности
+        const safetyStatus = document.getElementById('safety-status');
+        if (safetyScore >= 80) {
+            safetyStatus.className = 'alert alert-success';
+            safetyStatus.innerHTML = '<div class="d-flex align-items-center"><i class="bi bi-shield-check me-2"></i><span class="translatable">Статус безопасности: Норма</span></div>';
+        } else if (safetyScore >= 60) {
+            safetyStatus.className = 'alert alert-warning';
+            safetyStatus.innerHTML = '<div class="d-flex align-items-center"><i class="bi bi-exclamation-triangle me-2"></i><span class="translatable">Статус безопасности: Повышенная опасность</span></div>';
+        } else {
+            safetyStatus.className = 'alert alert-danger';
+            safetyStatus.innerHTML = '<div class="d-flex align-items-center"><i class="bi bi-exclamation-triangle-fill me-2"></i><span class="translatable">Статус безопасности: Критический</span></div>';
+        }
+        
+    } catch (error) {
+        console.error('Ошибка загрузки статистики:', error);
+    }
+}
+
+// Загрузка виджета погоды
+async function loadWeatherWidget() {
+    try {
+        const response = await fetch('/api/weather?lat=42.8746&lon=74.5698');
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+            displayWeatherWidget(data.current);
+        } else {
+            displayTestWeatherWidget();
+        }
+    } catch (error) {
+        console.error('Ошибка загрузки погоды:', error);
+        displayTestWeatherWidget();
+    }
+}
+
+// Отображение виджета погоды
+function displayWeatherWidget(current) {
+    const weatherWidget = document.querySelector('.weather-widget');
+    if (!weatherWidget) return;
+    
+    weatherWidget.innerHTML = `
+        <h5><i class="bi bi-cloud-sun me-2"></i><span class="translatable">Текущая погода</span></h5>
+        <div class="weather-current">
+            <div class="weather-icon">
+                <i class="bi ${getWeatherIcon(current.icon)}"></i>
+            </div>
+            <div>
+                <div class="weather-temp">${Math.round(current.temperature)}°C</div>
+                <div style="opacity: 0.8;">${current.description}</div>
+            </div>
+        </div>
+        <div class="weather-details">
+            <div><i class="bi bi-thermometer-half me-1"></i>Ощущается ${Math.round(current.feels_like)}°C</div>
+            <div><i class="bi bi-droplet me-1"></i>Влажность ${current.humidity}%</div>
+            <div><i class="bi bi-wind me-1"></i>Ветер ${current.wind_speed} м/с</div>
+            <div><i class="bi bi-eye me-1"></i>Видимость ${current.visibility} км</div>
+        </div>
+    `;
+}
+
+// Тестовые данные для погоды
+function displayTestWeatherWidget() {
+    const weatherWidget = document.querySelector('.weather-widget');
+    if (!weatherWidget) return;
+    
+    weatherWidget.innerHTML = `
+        <h5><i class="bi bi-cloud-sun me-2"></i><span class="translatable">Текущая погода</span></h5>
+        <div class="weather-current">
+            <div class="weather-icon">
+                <i class="bi bi-cloud-sun"></i>
+            </div>
+            <div>
+                <div class="weather-temp">22°C</div>
+                <div style="opacity: 0.8;">Переменная облачность</div>
+            </div>
+        </div>
+        <div class="weather-details">
+            <div><i class="bi bi-thermometer-half me-1"></i>Ощущается 25°C</div>
+            <div><i class="bi bi-droplet me-1"></i>Влажность 65%</div>
+            <div><i class="bi bi-wind me-1"></i>Ветер 3.5 м/с</div>
+            <div><i class="bi bi-eye me-1"></i>Видимость 10 км</div>
+        </div>
+    `;
+}
+
+// Получение иконки погоды
+function getWeatherIcon(iconCode) {
+    const iconMap = {
+        '01d': 'bi-sun',
+        '01n': 'bi-moon',
+        '02d': 'bi-cloud-sun',
+        '02n': 'bi-cloud-moon',
+        '03d': 'bi-cloud',
+        '03n': 'bi-cloud',
+        '04d': 'bi-clouds',
+        '04n': 'bi-clouds',
+        '09d': 'bi-cloud-rain',
+        '09n': 'bi-cloud-rain',
+        '10d': 'bi-cloud-rain',
+        '10n': 'bi-cloud-rain',
+        '11d': 'bi-cloud-lightning',
+        '11n': 'bi-cloud-lightning',
+        '13d': 'bi-snow',
+        '13n': 'bi-snow',
+        '50d': 'bi-cloud-fog',
+        '50n': 'bi-cloud-fog'
+    };
+    
+    return iconMap[iconCode] || 'bi-cloud-sun';
+}
+
+// Загрузка виджета новостей
+async function loadNewsWidget() {
+    try {
+        const response = await fetch('/api/news?lang=ru&limit=3');
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+            displayNewsWidget(data.data);
+        } else {
+            displayTestNewsWidget();
+        }
+    } catch (error) {
+        console.error('Ошибка загрузки новостей:', error);
+        displayTestNewsWidget();
+    }
+}
+
+// Отображение виджета новостей
+function displayNewsWidget(news) {
+    const newsWidget = document.querySelector('.news-widget');
+    if (!newsWidget) return;
+    
+    let newsHTML = `
+        <h5><i class="bi bi-newspaper me-2"></i><span class="translatable">Последние новости</span></h5>
+    `;
+    
+    news.forEach(item => {
+        newsHTML += `
+            <div class="news-item">
+                <div class="news-image">
+                    ${item.media_url ? 
+                        `<img src="${item.media_url}" alt="${item.title_ru || item.title}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">` :
+                        `<i class="bi bi-image display-6"></i>`
+                    }
+                </div>
+                <div class="news-content">
+                    <h6>${item.title_ru || item.title || 'Без заголовка'}</h6>
+                    <div class="news-meta">
+                        <span><i class="bi bi-calendar me-1"></i>${formatDate(item.published_at || item.created_at)}</span>
+                        <span><i class="bi bi-tag me-1"></i>${item.source || 'NASA'}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    
+    newsWidget.innerHTML = newsHTML;
+}
+
+// Тестовые данные для новостей
+function displayTestNewsWidget() {
+    const newsWidget = document.querySelector('.news-widget');
+    if (!newsWidget) return;
+    
+    newsWidget.innerHTML = `
+        <h5><i class="bi bi-newspaper me-2"></i><span class="translatable">Последние новости</span></h5>
+        <div class="news-item">
+            <div class="news-image">
+                <i class="bi bi-image display-6"></i>
+            </div>
+            <div class="news-content">
+                <h6>Красивая галактика в созвездии Андромеды</h6>
+                <div class="news-meta">
+                    <span><i class="bi bi-calendar me-1"></i>${new Date().toLocaleDateString()}</span>
+                    <span><i class="bi bi-tag me-1"></i>NASA</span>
+                </div>
+            </div>
+        </div>
+        <div class="news-item">
+            <div class="news-image">
+                <i class="bi bi-image display-6"></i>
+            </div>
+            <div class="news-content">
+                <h6>Новые данные о климатических изменениях</h6>
+                <div class="news-meta">
+                    <span><i class="bi bi-calendar me-1"></i>${new Date().toLocaleDateString()}</span>
+                    <span><i class="bi bi-tag me-1"></i>Climate</span>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// Форматирование даты
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('ru-RU', {
+        day: 'numeric',
+        month: 'short',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+
+// Настройка push-уведомлений
+function setupPushNotifications() {
+    if ('Notification' in window) {
+        if (Notification.permission === 'default') {
+            // Показываем кнопку для запроса разрешения
+            showNotificationPermissionButton();
+        } else if (Notification.permission === 'granted') {
+            // Уведомления уже разрешены
+            console.log('Push уведомления разрешены');
+        }
+    }
+}
+
+// Показать кнопку для запроса разрешения на уведомления
+function showNotificationPermissionButton() {
+    const heroSection = document.querySelector('.hero-section');
+    if (heroSection) {
+        const button = document.createElement('button');
+        button.className = 'btn btn-light btn-lg mt-3';
+        button.innerHTML = '<i class="bi bi-bell me-2"></i><span class="translatable">Разрешить уведомления</span>';
+        button.onclick = requestNotificationPermission;
+        heroSection.querySelector('.hero-content').appendChild(button);
+    }
+}
+
+// Запрос разрешения на уведомления
+async function requestNotificationPermission() {
+    try {
+        const permission = await Notification.requestPermission();
+        if (permission === 'granted') {
+            alert('Уведомления разрешены! Вы будете получать оповещения о критических событиях.');
+            // Здесь можно подписать пользователя на push-уведомления
+        } else {
+            alert('Уведомления заблокированы. Вы можете включить их в настройках браузера.');
+        }
+    } catch (error) {
+        console.error('Ошибка запроса разрешения на уведомления:', error);
+    }
+}
 </script>
 
 <!-- Leaflet CSS и JS -->
